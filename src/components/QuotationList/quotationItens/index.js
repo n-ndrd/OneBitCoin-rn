@@ -1,21 +1,21 @@
 import React from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text } from 'react-native'
+
+import { FontAwesome } from '@expo/vector-icons';
+
 import styles from './styles'
 
-export default function QuotationItens() {
+export default function QuotationItems() {
     return (
         <View style={styles.mainContent}>
             <View style={styles.contextLeft}>
                 <View style={styles.boxLogo}> 
-                    <Image 
-                        style={styles.logBitcoin}
-                        source={require('../../../img/bitcoin.png')}
-                    />
-                    <Text style={styles.dayQuotation}>05/11/2023</Text>
+                    <FontAwesome name="bitcoin" size={35} color="#f50d41" />
+                    <Text style={styles.dayQuotation}>06/11/2023</Text>
                 </View>
             </View>
             <View style={styles.contextRight}>
-                <Text style={styles.price}>$ 53331.50</Text>
+                <Text style={styles.price}>$ 53333333,0000</Text>
             </View>
 
         </View>
