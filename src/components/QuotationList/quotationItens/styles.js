@@ -13,27 +13,22 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     contextLeft:{
-        width: '36%',
+        width: '47.5%',
         alignItems: 'flex-start'
     },
     contextRight:{
-        width: '60%',
+        width: '47.5%',
         alignItems: 'flex-end'
     },
     boxLogo:{
         flexDirection: 'row',
         alignItems: 'center',
     },
-    logBitcoin:{
-        width: 40,
-        height: 40,
-        marginLeft: 2,
-    },
     dayQuotation:{
         fontSize: 16,
         paddingLeft: 20,
         color: '#fff',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     price:{
         color: '#fff',

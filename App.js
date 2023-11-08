@@ -1,74 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, StatusBar, SafeAreaView, Platform } from 'react-native';
+import axios from 'axios';
 
 import CurrentPrice from './src/components/currentPrice/';
 import HistoryGraphic from './src/components/historyGraphic/';
 import QuotationList from './src/components/quotationList/';
-import QuotationItems from './src/components/quotationList/quotationItens/';
 
-import { fetchHistoricalPrices } from './src/utils/url';
+import { SecondsToDate } from './src/utils/secondsToDate';
+import { addZero } from './src/utils/addZero';
 
-// async function getListCoins(url){
-//   let response = await fetch(url);
-//   let returnApi = await response.json();
-//   let selectListQuotations = returnApi.bpi; 
-
-//   const queryCoinsList = Object.keys(selectListQuotations.map((key) =>{
-//     return{
-//       data: key.split('-')('/').reverse().join('/'),
-//       value: selectListQuotations[key]
-//     }
-//   }))
-
-//   let data = queryCoinsList.reverse();
-//   console.log(data);
-// }
-
-// async function getPriceCoinsGraphic(url){
-//   let responseG = await fetch(url);
-//   let returnApiG = await responseG.json();
-//   let selectListQuotationsG = returnApiG.bpi; 
-
-//   const queryCoinsList = Object.keys(selectListQuotationsG.map((key) =>{
-//       selectListQuotationsG[key]
-//   }))
-  
-//   let dataG = queryCoinsList;
-//   console.log(dataG);
-// }
+const baseUrl = 'https://min-api.cryptocompare.com/data';
+const currency = 'USD';
+const symbol = 'BTC'
 
 export default function App() {
   const [coinsList, setCoinsList] = useState([]);
-  const [coinsGaphicList, setCoinsGaphicList] = useState([0]);
+  // const [coinsGaphicList, setCoinsGaphicList] = useState([0]);
   const [qtdDays, setQtdDays] = useState(30);
-  const [updateData, setUpdateData] = useState(true);
+  // const [updateData, setUpdateData] = useState(true);
 
   function updateDays(number){
     setQtdDays(number);
-    setUpdateData(true);
+    // setUpdateData(true);
+  }
+
+  async function getListQuotation() {
+    try {
+        const date = new Date();
+        const endDate = `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(date.getDate())}`;
+        date.setDate(date.getDate() - qtdDays);
+        const startDate = `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(date.getDate())}`;
+  
+        const response = await axios.get(`${baseUrl}/v2/histoday?fsym=${symbol}&tsym=${currency}&limit=${qtdDays}`);
+
+        const historicalPrices = response.data.Data.Data;
+
+        const queryCoinsList = historicalPrices.map((item) =>{
+          return{
+            date: SecondsToDate(item.time),
+            valueInicial: item.open,
+            valueFinal: item.close
+          }
+        })
+
+        setCoinsList(queryCoinsList)
+    } 
+    catch (error) {
+      console.log('Erro: '+error)  
+    }
   }
 
   useEffect(() => {
-    async function getListQuotation() {
-      try {
-        const prices = fetchHistoricalPrices(7)
-    
-        setCoinsList(prices);
-        console.log(prices)
-      } 
-      catch (error) {
-        console.log('Erro: '+error)  
-      }
-    }
-
     getListQuotation()
+  }, [qtdDays]);
 
-    if(updateData){
-      setUpdateData(false)
-    }
-
-  }, [updateData]);
-
+  // useEffect(() => {
+  //   if(updateData){
+  //     setUpdateData(false)
+  //   }
+  // }, [updateData])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,10 +69,9 @@ export default function App() {
       <CurrentPrice/>
       <HistoryGraphic/>
       <QuotationList
-        // filterDay={updateDays}
-        // listTransaction={coinsList}
+        filterDay={updateDays}
+        listTransaction={coinsList}
       />
-      <QuotationItems/>
     </SafeAreaView>
   );
 }
