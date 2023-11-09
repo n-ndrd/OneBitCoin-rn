@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react'
-import { View, ScrollView, Text, TouchableOpacity, FlatList } from 'react-native'
+import React, { Fragment, useState } from 'react'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import styles from './styles'
 import QuotationItems from './quotationItens'
+import Loader from '../loader'
 
 export default function QuotationList(props) {
     const daysQuery = props.filterDay
@@ -46,20 +47,26 @@ export default function QuotationList(props) {
 
             </View>
 
-           
-            <FlatList
-                data={props.listTransaction}
-                keyExtractor={(item) => item.date}
-                renderItem={({item}) => {
-                    return (
-                        <QuotationItems 
-                            value={item.valueFinal}
-                            date={item.date}
+            {
+                props.loading ?
+                    (
+                        <Loader />
+                    ) : 
+                    (
+                        <FlatList
+                            data={props.listTransaction}
+                            keyExtractor={(item) => item.date}
+                            renderItem={({ item }) => {
+                                return (
+                                    <QuotationItems
+                                        value={item.valueFinal}
+                                        date={item.date}
+                                    />
+                                )
+                            }}
                         />
                     )
-                }}
-            />
-            
+            }
         </Fragment>
     )
 }

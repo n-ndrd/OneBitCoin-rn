@@ -2,15 +2,14 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     contentGraphic:{
-        width:'90%',
-        height: 320,
-        backgroundColor: '#232323',
-        borderRadius: 10,
+        width:'auto',
+        height: 250,
     },
-    img:{
-        width: 'auto',
+    chart: {
         flex: 1,
-        borderRadius: 10,
+        width: '100%',
+        marginVertical: 8,
+        borderRadius: 16
     }
 })
 
