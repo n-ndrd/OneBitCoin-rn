@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, StatusBar, SafeAreaView, Platform } from 'react-native';
+import { StyleSheet, SafeAreaView, Platform } from 'react-native';
 import axios from 'axios';
 
-import CurrentPrice from '../../components/currentPrice/';
-import HistoryGraphic from '../../components/historyGraphic/';
-import QuotationList from '../../components/quotationList/';
+import CurrentPrice from '../../components/currentPrice';
+import HistoryGraphic from '../../components/historyGraphic';
+import QuotationList from '../../components/quotationList';
 
 import { SecondsToDate } from '../../utils/secondsToDate';
 import { addZero } from '../../utils/addZero';
@@ -13,7 +13,7 @@ const baseUrl = 'https://min-api.cryptocompare.com/data';
 const currency = 'USD';
 const symbol = 'BTC';
 
-export default function Home() {
+export default function HomeScreen() {
   const [coinsList, setCoinsList] = useState([]);
   const [qtdDays, setQtdDays] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,10 +58,6 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar 
-        backgroundColor='#f50d41'
-        barStyle='light-content'
-      />
       <CurrentPrice/>
       <HistoryGraphic
         data={coinsList}
@@ -79,6 +75,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#000000',
     paddingTop: Platform.OS === 'android' ? 40 : 0
   },
 });

@@ -6,24 +6,24 @@ import { LineChart } from 'react-native-chart-kit'
 
 export default function HistoryGraphic(props) {
 
-  // const data = {
-  //   labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
-  //   datasets: [
-  //     {
-  //       data: [50, 60, 70, 80, 90, 100],
-  //     },
-  //   ],
-  // };
-  
   const data = {
+    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
     datasets: [
       {
-        data: props.data.map((item) => {
-          return item.valueFinal
-        }),
+        data: [74, 36, 52, 8, 91, 15, 60, 43, 28, 4, 70, 11, 83, 19, 96, 48, 31, 64, 22, 55]
       },
     ],
   };
+  
+  // const data = {
+  //   datasets: [
+  //     {
+  //       data: props.data.map((item) => {
+  //         return item.valueFinal
+  //       }),
+  //     },
+  //   ],
+  // };
 
   return (
     <View style={styles.contentGraphic}>
